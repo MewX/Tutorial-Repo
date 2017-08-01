@@ -1,7 +1,7 @@
-#include "week2/SlowKeyboard.hpp"
+#include "week2/CrazyBot.hpp"
 
 int main()
 {
-	(new SlowKeyboard())->main();
+	(new CrazyBot())->main();
 	system("pause");
 }
