@@ -1,7 +1,7 @@
-#include "week2/HenrysKey.hpp"
+#include "week2/SumOfPower.hpp"
 
 int main()
 {
-	(new HenrysKey())->main();
+	(new SumOfPower())->main();
 	system("pause");
 }
