@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+*.bin
+out.*
 
 # Log file
 *.log
@@ -9,6 +11,10 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+META-INF/
+out/
+bin/
+build/
 
 # Package Files #
 *.jar
