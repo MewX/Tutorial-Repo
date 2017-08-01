@@ -9,7 +9,7 @@ using namespace std;
 class Test
 {
 public:
-	void main()
+	static void main()
 	{
 		cout << "This is the test file for PSSD project" << endl;
 		cout << (new Test())->testadd(1, 2) << endl;

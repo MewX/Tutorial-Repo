@@ -1,7 +1,7 @@
-#include "week1/Test.hpp"
+#include "week2/BootsExchange.hpp"
 
 int main()
 {
-	(new Test())->main();
+	(new BootsExchange())->main();
 	system("pause");
 }
