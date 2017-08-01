@@ -1,7 +1,7 @@
-#include "week2/BootsExchange.hpp"
+#include "week2/SlowKeyboard.hpp"
 
 int main()
 {
-	(new BootsExchange())->main();
+	(new SlowKeyboard())->main();
 	system("pause");
 }
