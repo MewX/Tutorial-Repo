@@ -1,7 +1,7 @@
-#include "week2/CrazyBot.hpp"
+#include "week2/ChangingString.hpp"
 
 int main()
 {
-	(new CrazyBot())->main();
+	(new ChangingString())->main();
 	system("pause");
 }

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="week1\Test.hpp" />
     <ClInclude Include="week2\BootsExchange.hpp" />
+    <ClInclude Include="week2\ChangingString.hpp" />
     <ClInclude Include="week2\CrazyBot.hpp" />
     <ClInclude Include="week2\HenrysKey.hpp" />
     <ClInclude Include="week2\SlowKeyboard.hpp" />
