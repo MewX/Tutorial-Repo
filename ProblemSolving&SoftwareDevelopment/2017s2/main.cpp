@@ -1,7 +1,7 @@
-#include "week2/MooingCows.hpp"
+#include "week2/ChristmasTree.hpp"
 
 int main()
 {
-	(new MooingCows())->main();
+	(new ChristmassTree())->main();
 	system("pause");
 }
