@@ -1,7 +1,7 @@
-#include "week2/ChangingString.hpp"
+#include "week2/MooingCows.hpp"
 
 int main()
 {
-	(new ChangingString())->main();
+	(new MooingCows())->main();
 	system("pause");
 }
