@@ -18,34 +18,45 @@ private:
 		this->b = base;
 	}
 
+	void removeLeadingZero(string &temp)
+	{
+		// remove leading zeros
+		int i = 0;
+		while (temp.length() != 0 && temp[i] == '0') temp.erase(0, 1);
+		if (temp.length() == 0) temp = "0";
+	}
+
 	string basicMultiply(char a, char b)
 	{
 		//normal way
 		const int mul = (a - '0') * (b -'0');
-		return string(1, mul / b + '0') + string(1, mul % b + '0');
+		string ret = string(1, mul / this->b + '0') + string(1, mul % this->b + '0');
+		removeLeadingZero(ret);
+		cout << a << " * " << b << " = " << ret << " (" << (a - '0') * (b -'0') << ")" << endl;
+		return ret;
 	}
 
 	void getHigh(const string &source, string &num, int size)
 	{
-		int len = size - (source.length() - size);
-		num = source.substr(0, max(len, 0));
+		num = source.substr(0, max((int)source.length() - size, 0));
 		if (num.length() == 0) num = "0";
 	}
 
 	void getLow(const string &source, string &num, int size)
 	{
-		num = source.substr(source.length() - size, size);
+		num = source.substr(max(0, (int)source.length() - size), source.length());
 		if (num.length() == 0) num = "0";
 	}
 
 	string karatsuba(string n1, string n2)
 	{
 		//reference: https://en.wikipedia.org/wiki/Karatsuba_algorithm
-		if (n1.length() == 1 && n1[0] - '0' < b && n2.length() == 1 && n2[0] - '0' < b)
+		//if (n1.length() == 1 && n1[0] - '0' < b && n2.length() == 1 && n2[0] - '0' < b)
+		if (n1.length() == 1 && n2.length() == 1)
 			return basicMultiply(n1[0], n2[0]);
 
 		int m = max(n1.length(), n2.length());
-		m >>= 1;//m = m/2,
+		m /= 2;//m = m/2,
 
 		//split the digits
 		string high1, low1, high2, low2;
@@ -53,6 +64,7 @@ private:
 		getLow(n1, low1, m);
 		getHigh(n2, high2, m);
 		getLow(n2, low2, m);
+		cout << "high1: " << high1 << "; low1: " << low1 << " || high2: " << high2 << "; low2: " << low2 << endl;
 
 		//recursive
 		string a = karatsuba(low1, low2);
@@ -61,10 +73,15 @@ private:
 
 		const string zeros(m, '0');
 		string part1 = c + zeros + zeros;
+		removeLeadingZero(part1);
 		string part2 = getSub(getSub(b, c), a) + zeros;
+		removeLeadingZero(part2);
 		string part3 = a;
+		removeLeadingZero(part3);
 
-		return getSum(part1, getSum(part2, part3));
+		string ret = getSum(part1, getSum(part2, part3));
+		cout << "==> " << n1 << " * " << n2 << " = " << ret << endl;
+		return ret;
 	}
 
 	string getSub(string i1, string i2)
@@ -133,9 +150,7 @@ private:
 		//	target.insert(0, string(1, (sub + b) % b + '0'));
 		//}
 
-		// remove leading zeros
-		int i = 0;
-		while (target.length() != 0 && target[i] == '0') target.erase(0, 1);
+		removeLeadingZero(target);
 
 		// last one
 		if (finalCarry) target.insert(0, string(1, '-'));
@@ -166,8 +181,9 @@ public:
 	void outputAnswer()
 	{
 		// TODO: I1 I2 B S P
-		//cout << getSum(i1, i2) << " " << getMultiply() << endl;
-		cout << getSum(i1, i2) << " " << getSub(i1, i2) << " " << getSub(i2, i1) << endl;
+		cout << "original: " << i1 << "; " << i2 << endl;
+		cout << getSum(i1, i2) << " " << getMultiply() << endl;
+		//cout << getSum(i1, i2) << " " << getSub(i1, i2) << " " << getSub(i2, i1) << endl;
 	}
 
 	string getSum(string i1, string i2)
