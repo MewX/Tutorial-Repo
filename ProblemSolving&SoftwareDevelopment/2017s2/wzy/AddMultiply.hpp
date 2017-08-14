@@ -9,6 +9,7 @@ using namespace std;
 class AddMultiply
 {
 private:
+	static const bool DEBUG = false;
 	string i1, i2;
 	int b;
 	void init(string i1, string i2, int base)
@@ -32,7 +33,7 @@ private:
 		const int mul = (a - '0') * (b -'0');
 		string ret = string(1, mul / this->b + '0') + string(1, mul % this->b + '0');
 		removeLeadingZero(ret);
-		cout << a << " * " << b << " = " << ret << " (" << (a - '0') * (b -'0') << ")" << endl;
+		if (DEBUG) cout << a << " * " << b << " = " << ret << " (" << (a - '0') * (b -'0') << ")" << endl;
 		return ret;
 	}
 
@@ -64,17 +65,17 @@ private:
 		getLow(n1, low1, m);
 		getHigh(n2, high2, m);
 		getLow(n2, low2, m);
-		cout << "n1 & n2: " << n1 << ", " << n2 << " || high1: " << high1 << "; low1: " << low1 << " || high2: " << high2 << "; low2: " << low2 << endl;
+		if (DEBUG) cout << "n1 & n2: " << n1 << ", " << n2 << " || high1: " << high1 << "; low1: " << low1 << " || high2: " << high2 << "; low2: " << low2 << endl;
 
 		//recursive
 		string a = karatsuba(low1, low2);
-		cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || a: " << a << endl;
+		if (DEBUG) cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || a: " << a << endl;
 		removeLeadingZero(a);
 		string c = karatsuba(high1, high2);
-		cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || c: " << c << endl;
+		if (DEBUG) cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || c: " << c << endl;
 		removeLeadingZero(c);
 		string b = karatsuba(getSum(low1, high1), getSum(low2, high2));
-		cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || b: " << b << endl;
+		if (DEBUG) cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || b: " << b << endl;
 		removeLeadingZero(b);
 		// TODO
 
@@ -82,16 +83,16 @@ private:
 		string part1 = c + zeros + zeros;
 		removeLeadingZero(part1);
 		string part2 = getSub(getSub(b, c), a) + zeros;
-		cout << "  >> b - c = " << b << " - " << c << " = " << getSub(b, c) << endl;
-		cout << "  >> b - c - a = " << getSub(b , c) << " - " << a << " = " << getSub(getSub(b, c), a) << endl;
+		if (DEBUG) cout << "  >> b - c = " << b << " - " << c << " = " << getSub(b, c) << endl;
+		if (DEBUG) cout << "  >> b - c - a = " << getSub(b , c) << " - " << a << " = " << getSub(getSub(b, c), a) << endl;
 		removeLeadingZero(part2);
 		string part3 = a;
 		removeLeadingZero(part3);
-		cout << "part1: " << part1 << "; part2: " << part2 << "; part3: " << part3 << endl;
+		if (DEBUG) cout << "part1: " << part1 << "; part2: " << part2 << "; part3: " << part3 << endl;
 
 		string ret = getSum(part1, getSum(part2, part3));
-		cout << "==> " << n1 << " * " << n2 << " = " << ret << endl;
-		cout << "============" << endl;
+		if (DEBUG) cout << "==> " << n1 << " * " << n2 << " = " << ret << endl;
+		if (DEBUG) cout << "============" << endl;
 		return ret;
 	}
 
@@ -101,11 +102,6 @@ private:
 		if (i1[0] == '-' && i2[0] == '-') return getSub(i2.substr(1), i1.substr(1));
 		else if (i1[0] == '-' && i2[0] != '-') return string(1, '-') + getSum(i1.substr(1), i2.substr(1));
 		else if (i1[0] != '-' && i2[0] == '-') return getSum(i1, i2.substr(1));
-
-		if (i1 == "24")
-		{
-			;
-		}
 
 		// find the bigger one
 		bool finalCarry = false;
@@ -213,9 +209,10 @@ public:
 	void outputAnswer()
 	{
 		// TODO: I1 I2 B S P
-		cout << "original: " << i1 << "; " << i2 << endl;
-		cout << "-------------- " << getSum(i1, i2) << " " << getMultiply() << endl;
+		if (DEBUG) cout << "original: " << i1 << "; " << i2 << endl;
+		//cout << "-------------- " << getSum(i1, i2) << " " << getMultiply() << endl;
 		//cout << getSum(i1, i2) << " " << getSub(i1, i2) << " " << getSub(i2, i1) << endl;
+		cout << i1 << " " << i2 << " " << b << " " << getSum(i1, i2) << " " << getMultiply() << endl;
 	}
 
 	string getSum(string i1, string i2)
