@@ -64,23 +64,34 @@ private:
 		getLow(n1, low1, m);
 		getHigh(n2, high2, m);
 		getLow(n2, low2, m);
-		cout << "high1: " << high1 << "; low1: " << low1 << " || high2: " << high2 << "; low2: " << low2 << endl;
+		cout << "n1 & n2: " << n1 << ", " << n2 << " || high1: " << high1 << "; low1: " << low1 << " || high2: " << high2 << "; low2: " << low2 << endl;
 
 		//recursive
 		string a = karatsuba(low1, low2);
-		string b = karatsuba(getSum(low1, high1), getSum(low2, high2));
+		cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || a: " << a << endl;
+		removeLeadingZero(a);
 		string c = karatsuba(high1, high2);
+		cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || c: " << c << endl;
+		removeLeadingZero(c);
+		string b = karatsuba(getSum(low1, high1), getSum(low2, high2));
+		cout << "  >> n1 & n2: " << n1 << ", " << n2 << " || b: " << b << endl;
+		removeLeadingZero(b);
+		// TODO
 
 		const string zeros(m, '0');
 		string part1 = c + zeros + zeros;
 		removeLeadingZero(part1);
 		string part2 = getSub(getSub(b, c), a) + zeros;
+		cout << "  >> b - c = " << b << " - " << c << " = " << getSub(b, c) << endl;
+		cout << "  >> b - c - a = " << getSub(b , c) << " - " << a << " = " << getSub(getSub(b, c), a) << endl;
 		removeLeadingZero(part2);
 		string part3 = a;
 		removeLeadingZero(part3);
+		cout << "part1: " << part1 << "; part2: " << part2 << "; part3: " << part3 << endl;
 
 		string ret = getSum(part1, getSum(part2, part3));
 		cout << "==> " << n1 << " * " << n2 << " = " << ret << endl;
+		cout << "============" << endl;
 		return ret;
 	}
 
@@ -91,14 +102,35 @@ private:
 		else if (i1[0] == '-' && i2[0] != '-') return string(1, '-') + getSum(i1.substr(1), i2.substr(1));
 		else if (i1[0] != '-' && i2[0] == '-') return getSum(i1, i2.substr(1));
 
+		if (i1 == "24")
+		{
+			;
+		}
+
 		// find the bigger one
 		bool finalCarry = false;
-		if (!(i1.length() > i2.length() || i1.length() == i2.length() && i1[0] > i2[0]))
+		if (i1.length() < i2.length())
 		{
+			finalCarry = true;
+		}
+		else if (i1.length() == i2.length())
+		{
+			for (int i = 0; i < i1.length(); i ++)
+			{
+				if (i1[i] - i2[i] > 0) break;
+				if (i1[i] - i2[i] < 0) {
+					finalCarry = true;
+					break;
+				}
+			}
+		}
+
+		if (finalCarry)
+		{
+			// swap, so: large - small
 			string bigger = i2;
 			i2 = i1;
 			i1 = bigger;
-			finalCarry = true;
 		}
 		
 		// two positive substracts
@@ -182,7 +214,7 @@ public:
 	{
 		// TODO: I1 I2 B S P
 		cout << "original: " << i1 << "; " << i2 << endl;
-		cout << getSum(i1, i2) << " " << getMultiply() << endl;
+		cout << "-------------- " << getSum(i1, i2) << " " << getMultiply() << endl;
 		//cout << getSum(i1, i2) << " " << getSub(i1, i2) << " " << getSub(i2, i1) << endl;
 	}
 
