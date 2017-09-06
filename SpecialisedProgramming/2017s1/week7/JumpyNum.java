@@ -6,7 +6,8 @@ public class JumpyNum {
         System.out.println(new JumpyNum().howMany(8000, 20934));
     }
 
-    private long[][][][] table = new long [12][10][2][2]; // [iDigi][curDigi][leadingDigi][meetingBound]
+    // [ith Digit][current Digit][is Leading Digit or not][meeting Boundary or not]
+    private long[][][][] table = new long [12][10][2][2];
     private int[] digis = null;
 
     public int howMany(int low, int high) {

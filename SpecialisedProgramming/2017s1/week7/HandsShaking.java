@@ -8,10 +8,12 @@ public class HandsShaking {
     }
 
     /**
-     * The idea is:
-     * 1. select a possible base line
-     * 2. let the people in two sides multiply
-     * 3. sum up all cases
+     * The idea is "divide and conquer" (blue line first, then yellow line):
+     * 1. select a possible base line to separate the table into two sides,
+     *    (here "possible" means: every side has exactly even number of people.)
+     * 2. each side from is a smaller shaking hanks problem (DIVIDE),
+     *    multiply the two sides to get results using this base line.
+     * 3. sum up all results from all possible base lines. (CONQUER)
      */
     public long countPerfect(int n) {
         // define history states, which can be used by future calculation
