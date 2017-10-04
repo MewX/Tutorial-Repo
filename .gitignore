@@ -34,3 +34,7 @@ Release/
 *.user
 *.filters
 
+# IDEA files
+out/
+.idea/
+
