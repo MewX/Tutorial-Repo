@@ -58,25 +58,37 @@ public:
 		return ans;
 	}
 
-	int dfs(int a, int from, const vector<Prop> *table, const bool *occupied) {
-		int m = 0;
+	int dfs(int current, int from, const vector<Prop> *table, const bool *occupied) {
+		cout << "  current: " << current << "; from: " << from << endl;
+		int maxEffort = 0;
 
 		// all nodes connected with current node 
-		for (int i = 0; i < table[a].size(); i ++) {
+		for (int i = 0; i < table[current].size(); i ++) {
 			// prevent fall back
-			if (table[a][i].target != from) {
-				// find 
-				int temp = dfs(table[a][i].target, a, table, occupied);
-				if (temp >= -1) {
-					temp = min(temp, table[a][i].effort);
-					m = max(m, temp);
+			if (table[current][i].target != from) {
+				// find possible minimal effort in this branch from `current` node
+				int temp = dfs(table[current][i].target, current, table, occupied);
+				cout << "    return temp: " << temp << endl;
+				// no occupied town in path
+				if (temp > -1) {
+					// remove the least effort road
+					temp = min(temp, table[current][i].effort);
+					// record the max effort from this ancester
+					maxEffort = max(maxEffort, temp);
+
+					// add this removed road first
 					ans += temp;
+					cout << "    current: " << current << "; from: " << from;
+					cout << "; temp: " << temp << "; m: " << maxEffort << "; ans: " << ans << endl;
 				}
 			}
 		}
 
-		if (occupied[a]) return 1000000000;
-		ans -= m;
-		return m;
+		// enemy in path (from enemy town to another other town takes super great effort)
+		if (occupied[current]) return 1000000000; // a very big effort
+
+		// used for detecting more than one enemies in path
+		ans -= maxEffort;
+		return maxEffort;
 	}
 };
